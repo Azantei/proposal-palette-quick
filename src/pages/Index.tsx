@@ -1,43 +1,97 @@
-import { motion } from "framer-motion";
-import heroImage from "@/assets/hero-community.jpg";
+import { useState, useEffect, useCallback } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import heroCommunity from "@/assets/hero-community.jpg";
+import heroCoffee from "@/assets/hero-coffee.jpg";
+import heroHiking from "@/assets/hero-hiking.jpg";
+import heroMarket from "@/assets/hero-market.jpg";
+import heroYoga from "@/assets/hero-yoga.jpg";
 import { Button } from "@/components/ui/button";
 import { MapPin, Users, Calendar, Sparkles, ArrowRight } from "lucide-react";
 
-const Hero = () => (
-  <section className="relative min-h-[90vh] flex items-center overflow-hidden">
-    <div className="absolute inset-0">
-      <img src={heroImage} alt="Community gathering in a park" className="w-full h-full object-cover" />
-      <div className="absolute inset-0 bg-gradient-to-r from-secondary/90 via-secondary/70 to-secondary/30" />
-    </div>
-    <div className="container relative z-10 py-20">
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        className="max-w-2xl"
-      >
-        <span className="inline-block px-4 py-1.5 rounded-full bg-primary/20 text-primary-foreground text-sm font-medium mb-6 backdrop-blur-sm border border-primary/30">
-          Your neighborhood, reimagined
-        </span>
-        <h1 className="text-5xl md:text-7xl font-display font-bold text-secondary-foreground leading-tight mb-6">
-          Connect.<br />Meet.<br />
-          <span className="text-primary">Discover.</span>
-        </h1>
-        <p className="text-lg md:text-xl text-secondary-foreground/80 mb-8 max-w-lg leading-relaxed">
-          Create, discover, and join local activities and events. From spontaneous hangouts to organized gatherings — your community awaits.
-        </p>
-        <div className="flex flex-wrap gap-4">
-          <Button size="lg" className="text-lg px-8 py-6 rounded-full shadow-[var(--shadow-soft)]">
-            Get Started <ArrowRight className="ml-2 h-5 w-5" />
-          </Button>
-          <Button variant="outline" size="lg" className="text-lg px-8 py-6 rounded-full border-secondary-foreground/30 text-secondary-foreground hover:bg-secondary-foreground/10">
-            Explore Events
-          </Button>
-        </div>
-      </motion.div>
-    </div>
-  </section>
-);
+const heroSlides = [
+  { src: heroCommunity, alt: "Community gathering in a park" },
+  { src: heroCoffee, alt: "Friends chatting over coffee" },
+  { src: heroHiking, alt: "Group hiking on a mountain trail" },
+  { src: heroMarket, alt: "Community farmers market" },
+  { src: heroYoga, alt: "Outdoor yoga class in a park" },
+];
+
+const Hero = () => {
+  const [current, setCurrent] = useState(0);
+
+  const next = useCallback(() => {
+    setCurrent((prev) => (prev + 1) % heroSlides.length);
+  }, []);
+
+  useEffect(() => {
+    const timer = setInterval(next, 5000);
+    return () => clearInterval(timer);
+  }, [next]);
+
+  return (
+    <section className="relative min-h-[90vh] flex items-center overflow-hidden">
+      {/* Slideshow background */}
+      <AnimatePresence mode="popLayout">
+        <motion.div
+          key={current}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1.2, ease: "easeInOut" }}
+          className="absolute inset-0"
+        >
+          <img
+            src={heroSlides[current].src}
+            alt={heroSlides[current].alt}
+            className="w-full h-full object-cover"
+          />
+        </motion.div>
+      </AnimatePresence>
+      <div className="absolute inset-0 bg-gradient-to-r from-secondary/90 via-secondary/70 to-secondary/30 z-[1]" />
+
+      <div className="container relative z-10 py-20">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="max-w-2xl"
+        >
+          <span className="inline-block px-4 py-1.5 rounded-full bg-primary/20 text-primary-foreground text-sm font-medium mb-6 backdrop-blur-sm border border-primary/30">
+            Your neighborhood, reimagined
+          </span>
+          <h1 className="text-5xl md:text-7xl font-display font-bold text-secondary-foreground leading-tight mb-6">
+            Connect.<br />Meet.<br />
+            <span className="text-primary">Discover.</span>
+          </h1>
+          <p className="text-lg md:text-xl text-secondary-foreground/80 mb-8 max-w-lg leading-relaxed">
+            Create, discover, and join local activities and events. From spontaneous hangouts to organized gatherings — your community awaits.
+          </p>
+          <div className="flex flex-wrap gap-4">
+            <Button size="lg" className="text-lg px-8 py-6 rounded-full shadow-[var(--shadow-soft)]">
+              Get Started <ArrowRight className="ml-2 h-5 w-5" />
+            </Button>
+            <Button variant="outline" size="lg" className="text-lg px-8 py-6 rounded-full border-secondary-foreground/30 text-secondary-foreground hover:bg-secondary-foreground/10">
+              Explore Events
+            </Button>
+          </div>
+          {/* Slide indicators */}
+          <div className="flex gap-2 mt-8">
+            {heroSlides.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setCurrent(i)}
+                className={`h-1.5 rounded-full transition-all duration-500 ${
+                  i === current ? "w-8 bg-primary" : "w-3 bg-secondary-foreground/30"
+                }`}
+                aria-label={`Go to slide ${i + 1}`}
+              />
+            ))}
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+};
 
 const features = [
   {

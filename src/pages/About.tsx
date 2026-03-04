@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Heart } from "lucide-react";
 import { Link } from "react-router-dom";
+import heroCommunity from "@/assets/hero-community.jpg";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 const teamMembers = [
@@ -54,8 +55,12 @@ const About = () => {
       <Navbar />
 
       {/* Hero / Mission */}
-      <section className="pt-32 pb-20 bg-secondary text-secondary-foreground">
-        <div className="container">
+      <section className="relative pt-32 pb-20 text-secondary-foreground overflow-hidden">
+        <div className="absolute inset-0">
+          <img src={heroCommunity} alt="" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-secondary/85" />
+        </div>
+        <div className="container relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}

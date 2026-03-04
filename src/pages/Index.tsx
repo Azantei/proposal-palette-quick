@@ -7,6 +7,7 @@ import heroMarket from "@/assets/hero-market.jpg";
 import heroYoga from "@/assets/hero-yoga.jpg";
 import { Button } from "@/components/ui/button";
 import { MapPin, Users, Calendar, Sparkles, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const heroSlides = [
   { src: heroCommunity, alt: "Community gathering in a park" },
@@ -218,9 +219,9 @@ const CTA = () => (
 const Navbar = () => (
   <nav className="fixed top-0 left-0 right-0 z-50 bg-secondary/80 backdrop-blur-md border-b border-secondary-foreground/10">
     <div className="container flex items-center justify-between h-16">
-      <span className="text-xl font-display font-bold text-secondary-foreground tracking-wide">C.M.D.</span>
+      <Link to="/" className="text-xl font-display font-bold text-secondary-foreground tracking-wide">C.M.D.</Link>
       <div className="hidden md:flex items-center gap-8 text-sm text-secondary-foreground/70">
-        <a href="#" className="hover:text-secondary-foreground transition-colors">About</a>
+        <Link to="/about" className="hover:text-secondary-foreground transition-colors">About</Link>
         <a href="#" className="hover:text-secondary-foreground transition-colors">Events</a>
         <a href="#" className="hover:text-secondary-foreground transition-colors">Community</a>
       </div>

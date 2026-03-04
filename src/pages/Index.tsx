@@ -7,6 +7,7 @@ import heroMarket from "@/assets/hero-market.jpg";
 import heroYoga from "@/assets/hero-yoga.jpg";
 import { Button } from "@/components/ui/button";
 import { MapPin, Users, Calendar, Sparkles, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const heroSlides = [
   { src: heroCommunity, alt: "Community gathering in a park" },

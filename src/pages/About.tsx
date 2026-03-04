@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Heart } from "lucide-react";
 import { Link } from "react-router-dom";
-import heroCommunity from "@/assets/hero-community.jpg";
+import heroCommunity from "@/assets/hero-about.jpg";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 const teamMembers = [
